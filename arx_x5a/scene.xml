@@ -1,0 +1,32 @@
+<mujoco model="x5a scene">
+  <include file="x5a.xml"/>
+
+  <statistic center="0 0 0.22" extent="0.55" meansize="0.05"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/><!-- 给远景添加淡蓝色薄雾 -->
+    <global azimuth="120" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <!-- 天空材质 -->
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <!-- 地面纹理 -->
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" width="300" height="300"
+      mark="cross" markrgb=".8 .8 .8"/>
+    <material name="grid" texture="grid" texrepeat="5 5" texuniform="true" reflectance="0.2"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+    <geom name="floor" size="0 0 0.01" type="plane" material="grid"/>
+<!-- 障碍物-球体 -->
+    <geom name="wall" size="0.03" type="sphere" pos="0.1 -0.2 0.2" contype="1" conaffinity="1" material="grid" rgba="0.3 0.3 0.30 0.8"/>
+    
+    <body name="target" pos="0.2 0.2 0.03">
+      <freejoint name="target_free"/>
+      <geom type="box" size=".03 .03 .03" rgba="0.95 0.35 0.10 1" mass="0.1" condim="4" friction="1.0 0.215 0.0222"/>
+    </body>
+  </worldbody>
+</mujoco>
